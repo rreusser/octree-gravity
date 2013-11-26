@@ -1,0 +1,29 @@
+#include <stdlib.h>
+#include <stdio.h>
+#include <math.h>
+
+#include "common.h"
+#include "particles.h"
+
+void init_particles( particles* p ) {
+  int i;
+  real r1, r2, R, rad;
+
+  R = 0.001;
+
+  for(i=0;i<p->n;i++) {
+    p->m[i] = 1.0/p->n;
+    r1 = drand48();
+    r2 = drand48();
+    p->x[6*i  ] = R*2.0*(cos(2.0*M_PI*r1)*sqrt(r2*(1.0-r2)));
+    p->x[6*i+1] = R*2.0*(sin(2.0*M_PI*r1)*sqrt(r2*(1.0-r2)));
+    p->x[6*i+2] = R*(1.0-2.0*r2);
+    rad = sqrt(SQR(p->x[6*i])+SQR(p->x[6*i+1])+SQR(p->x[6*i+2]));
+    r1 = (-1.0+2.0*drand48())*R*0.02;
+    p->x[6*i+3] = p->x[6*i  ]/pow(R+r1,1.25)*1.51;
+    p->x[6*i+4] = p->x[6*i+1]/pow(R+r1,1.25)*1.51;
+    p->x[6*i+5] = p->x[6*i+2]/pow(R+r1,1.25)*1.51;
+
+
+  }
+}
